@@ -168,14 +168,48 @@ writeToList <- function(es) {
 }
 
 #' @importFrom utils download.file
-updateARCHS4 <- function (cacheDir = "/var/phantasus/cache/archs4") {
-    download.file(url = "https://s3.amazonaws.com/mssm-seq-matrix/human_matrix.h5",
-                  destfile = paste(cacheDir, "human_matrix.h5", sep=.Platform$file.sep),
-                  mode = "wb")
+#' @param organism organizm to download: human, mouse, drosophila, zoo or all as default
+updateARCHS4 <- function (cacheDir = "/var/phantasus/cache/archs4", matrix_type="all") {
+    organism<-tolower(organism)
+    if(organism %in% c("all","human")){
+        download.file(url = "https://s3.amazonaws.com/mssm-seq-matrix/human_matrix.h5",
+                      destfile = paste(cacheDir, "human_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+    }
+    if(organism  %in% c("all","mouse")){
+        download.file(url = "https://s3.amazonaws.com/mssm-seq-matrix/mouse_matrix.h5",
+                      destfile = paste(cacheDir, "mouse_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+    }
+    if(organism  %in% c("all","drosophila")){
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Drosophila_melanogaster_genecount_v1.h5",
+                      destfile = paste(cacheDir, "drosophila_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+    }
+    if(organism  %in% c("all","zoo")){
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Bos_taurus_genecount_v1.h5",
+                      destfile = paste(cacheDir, "bos_taurus_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Caenorhabditis_elegans_genecount_v1.h5",
+                      destfile = paste(cacheDir, "caenorhabditis_elegans_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Danio_rerio_genecount_v1.h5",
+                      destfile = paste(cacheDir, "danio_rerio_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Gallus_gallus_genecount_v1.h5",
+                      destfile = paste(cacheDir, "gallus_gallus_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Rattus_norvegicus_genecount_v1.h5",
+                      destfile = paste(cacheDir, "rattus_norvegicus_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Saccharomyces_cerevisiae_genecount_v1.h5",
+                      destfile = paste(cacheDir, "saccharomyces_cerevisiae_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+        download.file(url = "https://s3.amazonaws.com/mssm-archs4-zoo/Arabidopsis_thaliana_genecount_v1.h5",
+                      destfile = paste(cacheDir, "arabidopsis_thaliana_matrix.h5", sep=.Platform$file.sep),
+                      mode = "wb")
+    }
 
-    download.file(url = "https://s3.amazonaws.com/mssm-seq-matrix/mouse_matrix.h5",
-                  destfile = paste(cacheDir, "mouse_matrix.h5", sep=.Platform$file.sep),
-                  mode = "wb")
 }
 
 selfCheck <- function (cacheDir=getOption("phantasusCacheDir"),
