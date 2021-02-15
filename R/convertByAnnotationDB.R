@@ -21,7 +21,7 @@
 #' }
 #'
 #'
-convertByAnnotationDB <- function (es, dbName, columnName, columnType, keyType) {
+convertByAnnotationDB <- function (es, dbName, columnName, columnType, keyType, otherOptions) {
     cacheDir <- getOption("phantasusCacheDir")
 
     annotDir <- paste(cacheDir, "annotationdb", sep = .Platform$file.sep)
@@ -33,6 +33,11 @@ convertByAnnotationDB <- function (es, dbName, columnName, columnType, keyType) 
     dbFile <- loadDb(dbPath)
 
     inputData <- fData(es)[[columnName]]
+    if ("deleteDotVersion" %in% names(otherOptions)){
+        if(otherOptions$deleteDotVersion){
+            inputData <- sapply(inputData, function (x) unlist(strsplit(x, '[.]'))[1] )
+        }
+    }
     convertedData <- mapIds(dbFile,
                            keys = inputData,
                            keytype = columnType,
